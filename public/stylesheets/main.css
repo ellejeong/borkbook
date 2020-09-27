@@ -5,10 +5,45 @@ html {
 html,
 body {
   height: 100%;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 table {
   margin: 0;
+}
+
+a {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+a:hover {
+  color: rgba(0, 0, 0, 0.9);
+  text-decoration: none;
+}
+
+.navbar {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.navbar a {
+  color: #9cb8b3;
+}
+
+.jumbotron {
+  background: #9cb8b3;
+}
+
+.jumbotron h1,
+.jumbotron h2 {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+}
+
+.jumbotron p {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
 }
 
 /* Login & Signup styles */

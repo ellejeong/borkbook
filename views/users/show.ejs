@@ -1,7 +1,7 @@
 <%- include("../partials/header") %>
-  <section class="jumbotron text-center">
+  <section class="jumbotron text-center" id="user-jumbotron">
     <div class="container">
-      <img src="<%= user.avatar %>" alt="user profile image" class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/img" preserveAspectRatio="xMidYMid slice" focusable="false" aria-label="user image"><title>Avatarr</title><rect width="100%" height="100%" fill="#777"></rect></svg>
+      <img src="<%= user.avatar %>" alt="user profile image" class="bd-placeholder-img rounded-circle mb-3" width="140" height="140" xmlns="http://www.w3.org/2000/img" preserveAspectRatio="xMidYMid slice" focusable="false" aria-label="user image"><title>Avatarr</title><rect width="100%" height="100%" fill="#777"></rect></img>
       <h2><%= user.firstName + " " + user.lastName %></h2>
       <p><a href="mailto:<%= user.email %>"> <%= user.email %> </a></p>
       <% if(currentUser && user._id.equals(currentUser._id) || currentUser &&
