@@ -1,0 +1,40 @@
+<%- include("../partials/header") %>
+  <section class="jumbotron text-center">
+    <div class="container">
+      <img src="<%= user.avatar %>" alt="user profile image" class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/img" preserveAspectRatio="xMidYMid slice" focusable="false" aria-label="user image"><title>Avatarr</title><rect width="100%" height="100%" fill="#777"></rect></svg>
+      <h2><%= user.firstName + " " + user.lastName %></h2>
+      <p><a href="mailto:<%= user.email %>"> <%= user.email %> </a></p>
+      <% if(currentUser && user._id.equals(currentUser._id) || currentUser &&
+      currentUser.isAdmin) { %>
+      <a class="btn btn-xs btn-warning" href="/users/<%= user._id %>/edit">
+        Edit
+      </a>
+      <% } %>
+    </div>
+  </section>
+  <div class="row justify-content-center">
+  <div class="col-md-12 text-center">
+    <h1 class="h1 mb-3 font-weight-normal"><%= user.username %>'s Posts</h1>
+  </div>
+    <% posts.forEach((post)=>{ %>
+  <div class="col-md-4">
+    <div class="card mb-4 shadow-sm">
+      <img src="<%= post.image %>" class="bd-placeholder-img card-img-top" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" aria-label="post image"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/></img>
+      <div class="card-body">
+        <h2><%= post.name %></h2>
+        <p class="card-text"><%= post.description %></p>
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="btn-group">
+            <p>
+              <a href="/posts/<%= post._id %>" class="btn btn-primary" target="_blank"> View </a>
+            </p>
+          </div>
+          <small class="text-muted"><%= moment(post.createdAt).fromNow() %></small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% }); %>
+</div>
+
+<%- include("../partials/footer") %>

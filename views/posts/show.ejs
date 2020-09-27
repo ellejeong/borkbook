@@ -1,0 +1,154 @@
+<%- include("../partials/header") %>
+
+<div class="column">
+  <div class="col-md-12 mb-5">
+    <div class="card mb-3">
+      <img class="card-img-top" src="<%= post.image%>" alt="<%= post.image%>" />
+      <div class="card-body">
+        <h5 class="class-title"><%= post.name %></h5>
+        <p>
+          <em>
+            Submitted by:
+            <a href="/users/<%= post.author.id %>">
+              <%= post.author.username %> </a
+            >, <%= moment(post.createdAt).fromNow() %>
+          </em>
+        </p>
+        <div style="padding-bottom: 10px">
+          <form action="/posts/<%= post._id %>/like" method="POST">
+            <div class="btn-group">
+              <% if (currentUser && post.likes.some(function (like) { return
+              like.equals(currentUser._id) })) { %>
+              <button class="btn btn-sm btn-info">
+                <i class="fas fa-thumbs-up"></i> Liked (<%= post.likes.length
+                %>)
+              </button>
+              <% } else { %>
+              <button class="btn btn-sm btn-info">
+                <i class="fas fa-thumbs-up"></i> Like (<%= post.likes.length %>)
+              </button>
+              <% } %> <% if(post.likes.length > 0) { %>
+              <button
+                type="button"
+                class="btn btn-sm btn-secondary"
+                data-toggle="modal"
+                data-target="#postLikes"
+              >
+                See more details
+              </button>
+              <% } %>
+            </div>
+          </form>
+        </div>
+        <p class="card-text"><%= post.description %></p>
+        <% if(currentUser && post.author.id.equals(currentUser._id) ||
+        currentUser && currentUser.isAdmin) { %>
+        <div class="float-right">
+          <a class="btn btn-sm btn-warning" href="/posts/<%= post._id %>/edit">
+            Edit
+          </a>
+          <form
+            class="delete-form"
+            action="/posts/<%= post._id %>?_method=DELETE"
+            method="POST"
+          >
+            <button class="btn btn-sm btn-danger">Delete</button>
+          </form>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <div class="text-right">
+        <a class="btn btn-success mb-3" href="/posts/<%= post._id %>/comments/new">
+          Add New Comment
+        </a>
+      </div>
+      <div class="row">
+        <% post.comments.forEach(comment => { %>
+        <div class="col-md-12 mb-2">
+          <div class="card">
+            <div class="card-body">
+              <p class="float-right">
+                <em>
+                  <small
+                    >Submitted <%= moment(comment.createdAt).fromNow() %></small
+                  >
+                </em>
+              </p>
+              <p class="card-title">
+                <strong>
+                  <a href="/users/<%= post.author.id %>">
+                    <%= comment.author.username %>
+                  </a>
+                </strong>
+              </p>
+              <p class="card-text"><%= comment.text %></p>
+              <% if(currentUser && comment.author.id.equals(currentUser._id) ||
+              currentUser && currentUser.isAdmin) { %>
+              <div class="mt-3">
+                <a
+                  class="btn btn-sm btn-warning"
+                  href="/posts/<%= post._id %>/comments/<%= comment._id %>/edit"
+                >
+                  Edit
+                </a>
+                <form
+                  class="delete-form"
+                  action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE"
+                  method="POST"
+                >
+                  <button class="btn btn-sm btn-danger">Delete</button>
+                </form>
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+    <a href="/posts">Go Back</a>
+  </div>
+</div>
+
+<div id="postLikes" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Post likes: <%= post.likes.length %></h4>
+      </div>
+      <div>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Liked by:</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% post.likes.forEach(function(like) { %>
+            <tr>
+              <td>
+                <span class="badge"><i class="fas fa-user"></i></span> <%=
+                like.username %>
+              </td>
+            </tr>
+            <% }); %> <% if (post.likes.length === 0) { %>
+            <tr>
+              <td><em>No likes yet.</em></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include("../partials/footer") %>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BorkBook</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
+    <!-- jQuery CDN -->
+    <script
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Bootstrap JS CDN -->
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link rel="stylesheet" href="/stylesheets/main.css" />
+  </head>
+  <body class="d-flex flex-column h-100">
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+        <a class="navbar-brand" href="/">BorkBook</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarCollapse"
+          aria-controls="navbarCollapse"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+          <ul class="navbar-nav mr-auto">
+            <li
+              class="nav-item <%= typeof page !== 'undefined' && page === 'posts' ? 'active' : '' %>"
+            >
+              <a class="nav-link" href="/posts">Home</a>
+            </li>
+          </ul>
+          <ul class="navbar-nav navbar-right">
+            <% if(!currentUser){ %>
+            <li
+              class="nav-item <%= typeof page !== 'undefined' && page === 'login' ? 'active' : '' %>"
+            >
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+            <li
+              class="nav-item <%= typeof page !== 'undefined' && page === 'register' ? 'active' : '' %>"
+            >
+              <a class="nav-link" href="/register">Sign Up</a>
+            </li>
+            <% } else { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/users/<%= currentUser.id%>"
+                >Signed In As <%= currentUser.username %></a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            <% } %>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <% if (error && error.length > 0) { %>
+    <div class="container">
+      <div class="alert alert-danger" role="alert"><%= error %></div>
+    </div>
+    <% } else if (success && success.length > 0) { %>
+    <div class="container">
+      <div class="alert alert-success" role="alert"><%= success %></div>
+    </div>
+    <% } %>
+    <main role="main" class="flex-shrink-0">
+      <div class="container">

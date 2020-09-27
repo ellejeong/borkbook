@@ -1,0 +1,15 @@
+# misc
+.env
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.DS_Store
+/.env
+/wdio.*.js
+node_modules
+yarn-error.log
+.idea
+.vscode
+npm-debug.log*
